@@ -4,6 +4,7 @@ import UserModal from "../models/user.js";
 
 const secret = "test";
 
+//logic to login
 export const signin = async (req, res, next) =>{
     const {email, password} = req.body;
 
@@ -30,6 +31,7 @@ export const signin = async (req, res, next) =>{
     }
 }
 
+//logic to register user
 export const signup = async (req, res)=>{
     const {email, password, firstName, lastName} = req.body;
 
