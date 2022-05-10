@@ -6,6 +6,17 @@
   height: 40vmin;
   pointer-events: none;
 }
+/* Login page */
+.login_background{
+  background-image: url("./images/river.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.login_box{
+  background-color: #0c3d28c5 !important;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
