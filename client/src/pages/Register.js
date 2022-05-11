@@ -16,8 +16,11 @@ import { toast } from "react-toastify";
 
 
 const initialState = {
+  firstName: "",
+  lasNAme: "",
   email: "",
   password: "",
+  confirmPassword:""
 }
 
 const Register = () => {
