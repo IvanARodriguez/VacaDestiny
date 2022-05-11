@@ -2,9 +2,9 @@ import './App.css';
 import { ToastContainer} from "react-toastify";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import "react-toastify/dist/ReactToastify.css";
-import Home from './component/pages/Home.js';
-import Login from './component/pages/Login.js';
-import Register from './component/pages/Register';
+import Home from './pages/Home.js';
+import Login from './pages/Login.js';
+import Register from './pages/Register';
 
 function App() {
   return (
