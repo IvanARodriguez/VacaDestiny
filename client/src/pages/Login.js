@@ -13,6 +13,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import { toast } from "react-toastify";
 import { login } from "../redux/features/authSlice";
+import { GoogleLogin } from "react-google-login";
 
 
 const initialState = {
@@ -23,13 +24,9 @@ const initialState = {
 const Login = () => {
 
   const [formValue, setFormValue] = useState(initialState);
-
   const {loading, error} = useSelector((state) => ({...state.auth}));
-
   const {email, password} = formValue;
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,12 +43,20 @@ const Login = () => {
 
   };
 
-const onInputChange = (e) => {
+  const onInputChange = (e) => {
 
-    let {name, value} = e.target;
+      let {name, value} = e.target;
 
-    setFormValue({...formValue, [name]: value });
+      setFormValue({...formValue, [name]: value });
   };
+
+  const googleSuccess = (resp) => {
+    console.log(resp);
+  };
+
+  function googleFailure(error) {
+    toast.error(error);
+  }
 
   return (
     <div className="login_background min-vh-100 min-vw-100 d-flex justify-content-center align-items-center" style={{"maxWidth": "2700px"}}>
@@ -72,12 +77,13 @@ const onInputChange = (e) => {
 
                 <MDBValidation onSubmit={handleSubmit} noValidate className="row g-4 m-0">
 
-                  <div className="col-md-12" >
+                  <div className="col-md-12 px-0" >
 
                       <MDBInput 
                         label="Email" 
                         type="email" 
-                        value={email} 
+                        value={email}
+                        autoComplete="username"
                         name="email" 
                         onChange={onInputChange} 
                         required 
@@ -86,12 +92,13 @@ const onInputChange = (e) => {
 
                   </div>
 
-                  <div className="col-md-12 " >
+                  <div className="col-md-12 px-0" >
 
                       <MDBInput 
                         label="Password" 
                         type="password" 
-                        value={password} 
+                        value={password}
+                        autoComplete="current-password"
                         name="password" 
                         onChange={onInputChange} 
                         required 
@@ -100,7 +107,7 @@ const onInputChange = (e) => {
 
                   </div>
 
-                  <div className="col-12">
+                  <div className="col-12 px-0">
                     <MDBBtn className="btn btn-warning w-100 mt-2">
                       {loading && (
                         <MDBSpinner 
@@ -116,12 +123,30 @@ const onInputChange = (e) => {
 
                 </MDBValidation>
 
+                <br />
+                <GoogleLogin 
+                  clientId="932725442050-esbfaekpno1n597a0bspe8og5n8b50qb.apps.googleusercontent.com"
+                  render={(renderProps) => (
+                    <MDBBtn 
+                      className="btn w-100 col-12"
+                      color="danger"
+                      onClick={renderProps.onClick} 
+                      disabled={renderProps.disabled}
+                    >
+                      <MDBIcon className="me-2" fab icon="google"/> Google sign in
+                    </MDBBtn>
+                  )}
+                  onSuccess={googleSuccess}
+                  onFailure={googleFailure}
+                  cookiePolicy="single_host_origin"
+                />
+
               </MDBCardBody>
 
 
               <MDBCardFooter>
 
-                <p>Don't have an account? <Link to="/register"> Sign Up </Link></p>
+                <p>Don't have an account? <Link to="/register"> Signup </Link></p>
 
               </MDBCardFooter> 
 

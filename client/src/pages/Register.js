@@ -12,7 +12,7 @@ import {
 import {Link, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import { toast } from "react-toastify";
-// import { login } from "../redux/features/authSlice";
+import { register } from "../redux/features/authSlice";
 
 
 const initialState = {
@@ -26,13 +26,9 @@ const initialState = {
 const Register = () => {
 
   const [formValue, setFormValue] = useState(initialState);
-
   const {loading, error} = useSelector((state) => ({...state.auth}));
-
-  const {email, password} = formValue;
-
+  const {email, password, firstName, lastName, confirmPassword} = formValue;
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,8 +39,12 @@ const Register = () => {
     
     e.preventDefault();
 
-    if(email && password){
-      dispatch(login({formValue, navigate, toast}))
+    if(password !== confirmPassword) {
+      return toast.error("Password should match");
+    }
+
+    if(email && password && firstName && lastName && confirmPassword) {
+      dispatch(register({formValue, navigate, toast}))
     }
 
   };
@@ -65,7 +65,7 @@ const onInputChange = (e) => {
 
           <div className="fit-content ">
             
-            <MDBCard style={{"maxWidth": "450px"}} className="py-5">
+            <MDBCard style={{"maxWidth": "550px"}} className="py-5">
 
               <MDBIcon fas icon="user-circle" className="fs-1"/>
 
@@ -74,6 +74,34 @@ const onInputChange = (e) => {
               <MDBCardBody>
 
                 <MDBValidation onSubmit={handleSubmit} noValidate className="row g-4 m-0">
+
+                  <div className="col-md-6" >
+
+                    <MDBInput 
+                      label="First Name" 
+                      type="firstName" npm
+                      value={firstName} 
+                      name="firstName" 
+                      onChange={onInputChange} 
+                      required 
+                      invalid 
+                      validation="PLease enter a valid first name"/>
+
+                  </div>
+
+                  <div className="col-md-6" >
+
+                    <MDBInput 
+                      label="Last Name" 
+                      type="lastName" 
+                      value={lastName} 
+                      name="lastName" 
+                      onChange={onInputChange} 
+                      required 
+                      invalid 
+                      validation="PLease enter a valid last name"/>
+
+                  </div>
 
                   <div className="col-md-12" >
 
@@ -103,6 +131,20 @@ const onInputChange = (e) => {
 
                   </div>
 
+                  <div className="col-md-12 " >
+
+                      <MDBInput 
+                        label="Confirm password" 
+                        type="password" 
+                        value={confirmPassword} 
+                        name="confirmPassword" 
+                        onChange={onInputChange} 
+                        required 
+                        invalid 
+                        validation="PLease enter a valid confirm password"/>
+
+                  </div>
+
                   <div className="col-12">
                     <MDBBtn className="btn btn-warning w-100 mt-2">
                       {loading && (
@@ -124,7 +166,7 @@ const onInputChange = (e) => {
 
               <MDBCardFooter>
 
-                <p>Have an account? <Link to="/register"> Signin </Link></p>
+                <p>Already have an account? <Link to="/login"> Signin </Link></p>
 
               </MDBCardFooter> 
 
