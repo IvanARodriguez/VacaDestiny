@@ -13,7 +13,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import { toast } from "react-toastify";
 import { login } from "../redux/features/authSlice";
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin } from 'react-google-login';
 
 
 const initialState = {
@@ -23,12 +23,13 @@ const initialState = {
 
 const Login = () => {
 
+  
   const [formValue, setFormValue] = useState(initialState);
   const {loading, error} = useSelector((state) => ({...state.auth}));
   const {email, password} = formValue;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     error && toast.error(error);
   }, [error]);
@@ -50,35 +51,28 @@ const Login = () => {
       setFormValue({...formValue, [name]: value });
   };
 
+  
   const googleSuccess = (resp) => {
     console.log(resp);
   };
 
-  function googleFailure(error) {
+  const googleFailure = (error) => {
     toast.error(error);
   }
 
   return (
+    
     <div className="login_background min-vh-100 min-vw-100 d-flex justify-content-center align-items-center" style={{"maxWidth": "2700px"}}>
 
         <div className="col-md-6 min-vh-100 bg-dark d-flex flex-column justify-content-center align-items-center login_box px-3">
-
           <h1 className="display-5 text-white py-md-5">Welcome Back</h1>
-
           <div className="fit-content ">
-            
             <MDBCard style={{"maxWidth": "450px"}} className="py-5">
-
               <MDBIcon fas icon="user-circle" className="fs-1"/>
-
               <h5>Sign In</h5>
-
               <MDBCardBody>
-
                 <MDBValidation onSubmit={handleSubmit} noValidate className="row g-4 m-0">
-
                   <div className="col-md-12 px-0" >
-
                       <MDBInput 
                         label="Email" 
                         type="email" 
@@ -89,7 +83,6 @@ const Login = () => {
                         required 
                         invalid 
                         validation="PLease enter a valid email"/>
-
                   </div>
 
                   <div className="col-md-12 px-0" >
@@ -120,44 +113,34 @@ const Login = () => {
                       Login
                     </MDBBtn>
                   </div>
-
                 </MDBValidation>
 
                 <br />
-                <GoogleLogin 
-                  clientId="932725442050-esbfaekpno1n597a0bspe8og5n8b50qb.apps.googleusercontent.com"
-                  render={(renderProps) => (
-                    <MDBBtn 
-                      className="btn w-100 col-12"
-                      color="danger"
-                      onClick={renderProps.onClick} 
-                      disabled={renderProps.disabled}
-                    >
-                      <MDBIcon className="me-2" fab icon="google"/> Google sign in
-                    </MDBBtn>
-                  )}
+                
+                <GoogleLogin
+                  clientId='519077888245-vde1f00r47ffs4g2ge3jbqipd9805s99.apps.googleusercontent.com'
                   onSuccess={googleSuccess}
                   onFailure={googleFailure}
                   cookiePolicy="single_host_origin"
+                  render={(renderProps) => (
+                    <MDBBtn 
+                    className="btn w-100 col-12"
+                    color="danger"
+                    onClick={renderProps.onClick} 
+                    disabled={renderProps.disabled}
+                    >
+                      <MDBIcon className="me-2" fab icon="google" />Sign in with Google
+                    </MDBBtn>
+                  )}
                 />
 
               </MDBCardBody>
-
-
               <MDBCardFooter>
-
                 <p>Don't have an account? <Link to="/register"> Signup </Link></p>
-
               </MDBCardFooter> 
-
             </MDBCard>
-
           </div>
-        
         </div>
-
-        
-
     </div>
   )
 }

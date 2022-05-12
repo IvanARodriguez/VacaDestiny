@@ -176,8 +176,6 @@ const onInputChange = (e) => {
         
         </div>
 
-        
-
     </div>
   )
 }
