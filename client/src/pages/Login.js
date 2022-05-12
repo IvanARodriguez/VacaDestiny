@@ -57,6 +57,7 @@ const Login = () => {
   };
 
   const googleFailure = (error) => {
+    console.log(error)
     toast.error(error);
   }
 
